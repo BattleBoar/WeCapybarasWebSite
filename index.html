@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Capybaras </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Exo 2', sans-serif;
+        }
+
+        :root {
+            --dark-bg: #0d0d12;
+            --grid-color: rgba(255, 119, 0, 0.05);
+            --neon-orange: #ff7700;
+            --deep-orange: #ff5500;
+            --dark-orange: #cc4400;
+            --brown-accent: #994400;
+            --rust: #b7410e;
+            --copper: #b87333;
+            --text-glow: 0 0 10px rgba(255, 119, 0, 0.7), 0 0 20px rgba(255, 119, 0, 0.5);
+            --section-bg: rgba(20, 20, 25, 0.8);
+        }
+
+        @font-face {
+            font-family: 'Rajdhani';
+            src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #e0e0e0;
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(255, 119, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 119, 0, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-attachment: fixed;
+        }
+
+        /* Глитч эффекты */
+        .glitch-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            background: 
+                linear-gradient(transparent 70%, rgba(255, 100, 0, 0.1) 90%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.15) 1px,
+                    transparent 2px,
+                    transparent 5px
+                );
+        }
+
+        /* Шапка сайта */
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(13, 13, 18, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--dark-orange);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--neon-orange), var(--brown-accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 119, 0, 0.4);
+        }
+
+        .logo-icon::before {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+        }
+
+        .logo-icon::after {
+            content: "WC";
+            position: absolute;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 18px;
+            color: white;
+            text-shadow: var(--text-glow);
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            background: linear-gradient(to right, var(--neon-orange), var(--copper));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--text-glow);
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #d0d0d0;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--neon-orange);
+            transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        nav a:hover {
+            color: var(--neon-orange);
+            text-shadow: var(--text-glow);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Герой секция */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(153, 68, 0, 0.1) 0%, rgba(13, 13, 18, 0) 70%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--neon-orange), var(--copper), var(--brown-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--text-glow);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .tagline {
+            color: var(--neon-orange);
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 119, 0, 0.7);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: linear-gradient(45deg, var(--neon-orange), var(--rust));
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 25px rgba(255, 119, 0, 0.5);
+            font-size: 1.1rem;
+            margin: 15px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(255, 119, 0, 0.7), 0 0 40px rgba(255, 119, 0, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--neon-orange);
+            box-shadow: 0 0 15px rgba(255, 119, 0, 0.3);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 119, 0, 0.15);
+        }
+
+        /* Секции проектов */
+        .section {
+            padding: 100px 10%;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 70px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(to right, var(--neon-orange), var(--copper));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--text-glow);
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--neon-orange), var(--brown-accent));
+            border-radius: 2px;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: var(--section-bg);
+            border: 1px solid var(--dark-orange);
+            border-radius: 10px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 119, 0, 0.2);
+        }
+
+        .project-card::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-orange), transparent, var(--brown-accent));
+            z-index: -1;
+            border-radius: 12px;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .project-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 119, 0, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--neon-orange);
+            margin-right: 20px;
+            text-shadow: var(--text-glow);
+        }
+
+        .project-name {
+            font-size: 2.2rem;
+            color: var(--neon-orange);
+            text-shadow: var(--text-glow);
+        }
+
+        .project-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: #f0f0f0;
+        }
+
+        .project-card p {
+            margin-bottom: 25px;
+            color: #c0c0c0;
+            font-size: 1.1rem;
+        }
+
+        .features {
+            margin: 30px 0;
+        }
+
+        .features h4 {
+            color: var(--neon-orange);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .features ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .features li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .features li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--neon-orange);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 119, 0, 0.2);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: var(--neon-orange);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 15px;
+            border: 1px solid var(--dark-orange);
+        }
+
+        /* О студии */
+        .about-section {
+            background: linear-gradient(to bottom, rgba(15, 15, 20, 0.9), rgba(20, 20, 30, 0.9));
+            border-top: 1px solid var(--dark-orange);
+            border-bottom: 1px solid var(--dark-orange);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--neon-orange);
+            text-shadow: var(--text-glow);
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            font-size: 1.15rem;
+            color: #d0d0d0;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            background: rgba(30, 30, 40, 0.6);
+            border: 1px solid var(--dark-orange);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .team-member i {
+            font-size: 2.5rem;
+            color: var(--neon-orange);
+            margin-bottom: 15px;
+        }
+
+        .team-member h4 {
+            color: #f0f0f0;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+        }
+
+        .capybara-image {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-orange);
+        }
+
+        .capybara-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 119, 0, 0.1), rgba(153, 68, 0, 0.2));
+            z-index: 1;
+        }
+
+        .capybara-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Подвал */
+        footer {
+            padding: 60px 10% 40px;
+            background: rgba(10, 10, 15, 0.95);
+            border-top: 1px solid var(--dark-orange);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--neon-orange), var(--copper));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--text-glow);
+            margin-bottom: 20px;
+        }
+
+        .footer-info p {
+            color: #a0a0a0;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(50, 50, 60, 0.6);
+            border-radius: 50%;
+            color: #d0d0d0;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--dark-orange);
+        }
+
+        .social-links a:hover {
+            background: var(--neon-orange);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(255, 119, 0, 0.5);
+        }
+
+        .footer-links h3 {
+            color: var(--neon-orange);
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-orange);
+            text-shadow: var(--text-glow);
+        }
+
+        .footer-links a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .newsletter h3 {
+            color: var(--neon-orange);
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+        }
+
+        .newsletter p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 14px 20px;
+            background: rgba(30, 30, 40, 0.6);
+            border: 1px solid var(--dark-orange);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            padding: 0 25px;
+            background: var(--neon-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--deep-orange);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 119, 0, 0.2);
+            color: #909090;
+            font-size: 0.95rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1100px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .section {
+                padding: 70px 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .project-icon {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glitch-layer"></div>
+    
+    <header>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <div class="logo-text">WE CAPYBARAS</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#technology">Технологии</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="tagline">ИГРОВАЯ ИНДУСТРИЯ БУДУЩЕГО</div>
+        <h1>СОЗДАЕМ ИГРЫ, КОТОРЫЕ ЗАХВАТЫВАЮТ</h1>
+        <p>We Capybaras - инновационная игровая студия, специализирующаяся на разработке продвинутых игровых миров.</p>
+        <div>
+            <a href="#projects" class="cta-button">Наши проекты</a>
+            <a href="#technology" class="cta-button secondary">Технологии</a>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <h2 class="section-title">Наши проекты</h2>
+        
+        <div class="project-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">A</div>
+                    <div class="project-name">ALOGAM</div>
+                </div>
+                <h3>Игровой движок нового поколения</h3>
+                <p>ALOGAM - революционный игровой движок, разработанный для создания проектов следующего поколения. С поддержкой реалистичной графики, сложной физики и продвинутого ИИ.</p>
+                
+                <div class="features">
+                    <h4>Ключевые особенности:</h4>
+                    <ul>
+                        <li>Реальное время, Динамическое освишенье</li>
+                        <li>Динамичные скрипты</li>
+                        <li>Продвинутая система разрушений</li>
+                        <li>Инструменты для процедурного генерирования</li>
+                        <li>Кросс-платформенная поддержка</li>
+                    </ul>
+                </div>
+                
+                <span class="status">В активной разработке</span>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-header">
+                    <div class="project-icon">P</div>
+                    <div class="project-name">Project-45</div>
+                </div>
+                <h3>FPS шутер с сюжетом и мультиплеером</h3>
+                <p>Project-45 - амбициозный проект, объединяющий глубокий сюжет с захватывающим мультиплеером. Действие происходит в будущем.</p>
+                
+                <div class="features">
+                    <h4>Особенности игры:</h4>
+                    <ul>
+                        <li>Захватывающая сюжетная кампания на 20+ часов</li>
+                        <li>Тактический мультиплеер 5x5</li>
+                        <li>Система прогрессии персонажа</li>
+                        <li>Динамическая уровней</li>
+                        <li>Реалистичная физика</li>
+                    </ul>
+                </div>
+                
+                <span class="status">В разработке</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about-section" id="about">
+        <h2 class="section-title">О студии</h2>
+        
+        <div class="about-content">
+            <div class="about-text">
+                <h2>We Capybaras</h2>
+                <p>Основанная в 2025 году, наша студия стремится создавать игры, которые оставляют след. Мы верим, что игры - это не просто развлечение, а искусство, способное рассказывать истории и вызывать эмоции.</p>
+                <p>Наша команда состоит из интузиастов, объединенных страстью к созданию уникальных игровых миров. Мы гордимся тем, что разрабатываем как технологии, так и контент.</p>
+                <p>Название "We Capybaras" отражает нашу философию: как капибары являются самыми крупными и миролюбивыми грызунами, мы стремимся быть крупной, но дружелюбной студией, создающей великие игры.</p>
+                
+              
+            </div>
+            
+            <div class="capybara-image">
+                <!-- Изображение капибары было бы здесь -->
+                <img src="Capybara.jpg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="technology">
+        <h2 class="section-title">Технологии</h2>
+        
+        <div class="project-card">
+            <div class="project-header">
+                <div class="project-icon"><i class="fas fa-microchip"></i></div>
+                <div class="project-name">Наш Технологический Стек</div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px;">
+                <div>
+                    <h3 style="color: var(--neon-orange); margin-bottom: 15px;">Графические технологии</h3>
+                    <ul class="features">
+                        <li>Vulkan и DirectX 11 </li>
+                        <li>Реальное время и Реалистичное освещение</li>
+                        <li>Эффекты и партиклы</li>
+                        <li>Продвинутые шейдерные модели</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: var(--neon-orange); margin-bottom: 15px;">Игровая физика</h3>
+                    <ul class="features">
+                        <li>Реалистичная физика</li>
+                        <li>Динамическое разрушение объектов</li>
+                        <li>Симуляция Регдола</li>
+                        <li>Красивые анимации</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: var(--neon-orange); margin-bottom: 15px;">Искусственный интеллект</h3>
+                    <ul class="features">
+                        <li>Обучение NPC</li>
+                        <li>Частые обновления</li>
+                        <li>Красивые модели</li>
+                        <li>Вариативная сложность</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">WE CAPYBARAS</div>
+                <p>© 2025 We Capybaras Studio. Все права защищены.</p>
+                
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Навигация</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Наши проекты</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Карьера в студии</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Блог разработчиков</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Поддержка</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="newsletter">
+                <h3>Рассылка</h3>
+                <p>Подпишитесь, чтобы первыми узнавать о новостях Project-45 и движка ALOGAM.</p>
+                
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Ваш Email">
+                    <button>Подписаться</button>
+                </div>
+                
+                <p style="font-size: 0.9rem; margin-top: 15px;">Мы уважаем вашу конфиденциальность и не спамим.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            We Capybaras | Основано в 2025 | Уфа, Россия
+        </div>
+    </footer>
+
+    <script>
+        // Простая анимация для элементов при прокрутке
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Анимируем карточки проектов
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Анимируем секцию "О нас"
+            const aboutSection = document.querySelector('.about-content');
+            aboutSection.style.opacity = 0;
+            aboutSection.style.transform = 'translateY(30px)';
+            aboutSection.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(aboutSection);
+            
+            // Эффект печатающегося текста для заголовка
+            const heroTitle = document.querySelector('.hero h1');
+            const text = heroTitle.textContent;
+            heroTitle.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            };
+            
+            setTimeout(typeWriter, 500);
+        });
+    </script>
+</body>
+</html>
